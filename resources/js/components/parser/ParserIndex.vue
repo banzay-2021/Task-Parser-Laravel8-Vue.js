@@ -3,8 +3,12 @@
         <div class="panel panel-default">
             <div class="h1 m-3">
                 Articles list
-                <button :to="{name: 'mewParsing'}" v-on:click="addSites()"
-                        class="btn btn-xs btn-outline-primary float-end">New parsing
+                <button
+                    :to="{name: 'mewParsing'}"
+                    v-on:click="addSites($event)"
+                    class="btn btn-xs btn-outline-primary float-end"
+                >
+                    New parsing
                 </button>
             </div>
 
@@ -35,11 +39,11 @@
                         <td>{{ item.id_item }}</td>
                         <td>{{ item.created }}</td>
                         <td>
-                            <a href="#"
+                            <button
                                class="btn btn-xs btn-outline-primary"
-                               v-on:click="updatePoints(item.id_item, index)">
+                               v-on:click="updatePoints(item.id_item, index, $event)">
                                 Update points
-                            </a>
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -75,31 +79,38 @@ export default {
                     this.laravelData = resp.data;
                 });
         },
-        updatePoints(id_item, index) {
-
+        updatePoints(id_item, index, e) {
             if (confirm("Do you really want to update it?")) {
+                e.originalTarget.disabled = true;
                 axios.get('/api/v1/parser/update-point/' + id_item)
                     .then(resp => {
-                        if (resp.data.id_item == false) {
+                        if (resp.data.id_item !== false) {
                             this.items[index].points = resp.data.points;
                             alert("item " + resp.data.id_item + "  updated. New points are - " + resp.data.points);
                         } else {
                             alert("item " + resp.data.id_item + " is no longer available, so its points cannot be updated.");
                         }
+                        e.originalTarget.disabled = false;
                     })
                     .catch(function (resp) {
                         alert("Could not update item");
+                        e.originalTarget.disabled = false;
                     });
             }
         },
-        addSites() {
+        addSites(e) {
             if (confirm("Do you really want to add sites?")) {
+                e.originalTarget.disabled = true;
+                var innerText = e.originalTarget.innerText;
+                e.originalTarget.innerText = 'Parsing is on';
                 axios.get('/api/v1/parser/add/')
                     .then(function (resp) {
-                        alert("Sites added.");
+                        location.reload();
                     })
                     .catch(function (resp) {
-                        alert("Could not add items");
+                        e.originalTarget.disabled = false;
+                        e.originalTarget.innerText = innerText;
+                        //alert("Could not add items");
                     });
             }
         }

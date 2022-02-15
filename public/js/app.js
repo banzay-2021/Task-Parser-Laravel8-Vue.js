@@ -5315,6 +5315,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ParserIndex",
   data: function data() {
@@ -5340,28 +5344,36 @@ __webpack_require__.r(__webpack_exports__);
         _this.laravelData = resp.data;
       });
     },
-    updatePoints: function updatePoints(id_item, index) {
+    updatePoints: function updatePoints(id_item, index, e) {
       var _this2 = this;
 
       if (confirm("Do you really want to update it?")) {
+        e.originalTarget.disabled = true;
         axios.get('/api/v1/parser/update-point/' + id_item).then(function (resp) {
-          if (resp.data.id_item == false) {
+          if (resp.data.id_item !== false) {
             _this2.items[index].points = resp.data.points;
             alert("item " + resp.data.id_item + "  updated. New points are - " + resp.data.points);
           } else {
             alert("item " + resp.data.id_item + " is no longer available, so its points cannot be updated.");
           }
+
+          e.originalTarget.disabled = false;
         })["catch"](function (resp) {
           alert("Could not update item");
+          e.originalTarget.disabled = false;
         });
       }
     },
-    addSites: function addSites() {
+    addSites: function addSites(e) {
       if (confirm("Do you really want to add sites?")) {
+        e.originalTarget.disabled = true;
+        var innerText = e.originalTarget.innerText;
+        e.originalTarget.innerText = 'Parsing is on';
         axios.get('/api/v1/parser/add/').then(function (resp) {
-          alert("Sites added.");
+          location.reload();
         })["catch"](function (resp) {
-          alert("Could not add items");
+          e.originalTarget.disabled = false;
+          e.originalTarget.innerText = innerText; //alert("Could not add items");
         });
       }
     }
@@ -28582,11 +28594,11 @@ var render = function () {
             attrs: { to: { name: "mewParsing" } },
             on: {
               click: function ($event) {
-                return _vm.addSites()
+                return _vm.addSites($event)
               },
             },
           },
-          [_vm._v("New parsing\n            ")]
+          [_vm._v("\n                New parsing\n            ")]
         ),
       ]),
       _vm._v(" "),
@@ -28630,13 +28642,16 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [
                       _c(
-                        "a",
+                        "button",
                         {
                           staticClass: "btn btn-xs btn-outline-primary",
-                          attrs: { href: "#" },
                           on: {
                             click: function ($event) {
-                              return _vm.updatePoints(item.id_item, index)
+                              return _vm.updatePoints(
+                                item.id_item,
+                                index,
+                                $event
+                              )
                             },
                           },
                         },
