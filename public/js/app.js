@@ -28574,7 +28574,7 @@ var render = function () {
   return _c("div", [
     _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "h1 m-3" }, [
-        _vm._v("\n            Sites list\n            "),
+        _vm._v("\n            Articles list\n            "),
         _c(
           "button",
           {
@@ -28604,7 +28604,9 @@ var render = function () {
                   "tr",
                   { key: item.id, staticClass: "align-baseline" },
                   [
-                    _c("td", [_vm._v(_vm._s(item.id))]),
+                    _c("td", { staticClass: "align-content-center" }, [
+                      _vm._v(_vm._s(item.id)),
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _c("a", { attrs: { href: item.link } }, [
@@ -28616,7 +28618,7 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c("td", [
+                    _c("td", { staticClass: "align-content-center" }, [
                       _c("span", { attrs: { id: "point_" + item.id_item } }, [
                         _vm._v(_vm._s(item.points)),
                       ]),

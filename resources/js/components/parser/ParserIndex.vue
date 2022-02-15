@@ -22,14 +22,14 @@
                     </thead>
                     <tbody>
                     <tr v-for="item, index in items" v-bind:key="item.id" class="align-baseline">
-                        <td>{{ item.id }}</td>
+                        <td class="align-content-center">{{ item.id }}</td>
                         <td>
                             <a v-bind:href="item.link">
                                 {{ item.title }}
                             </a>
 
                         </td>
-                        <td>
+                        <td class="align-content-center">
                             <span :id="'point_' + item.id_item">{{ item.points }}</span>
                         </td>
                         <td>{{ item.id_item }}</td>
