@@ -1,3 +1,24 @@
+## Init project
+
+php 7.4, MySQL 8.0.28, npm 8.4.1, Composer 2.1.9
+
+- Create folder for project
+- In the terminal - git clone git@github.com:banzay-2021/testparser.git
+- In the terminal - cd testparser
+- In the terminal - composer install
+- In the terminal - cp .env.example .env
+- Open the .env file with an editor and enter the database parameters.
+- In the terminal - php artisan key:generate
+- In the terminal - npm install
+- In the terminal - php artisan serve
+- In the browser, open the address that php artisan serve will show
+  Usually this is 127.0.0.1:8000
+- In another terminal, run watch to commit changes to the frontend - npm run watch
+
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
